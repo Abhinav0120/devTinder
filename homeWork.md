@@ -17,3 +17,6 @@
 - play with route and route extension ex: /hello
 - Order of the routes matter a lot
 - Install postman and make a work space and collection and make a Get test api call
+- Use of rejex in the routes /a/,   /.*fly$/
+- Reading the query params in the routes
+- Reading the dynamic routes
