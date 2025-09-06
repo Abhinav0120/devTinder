@@ -20,3 +20,8 @@
 - Use of rejex in the routes /a/,   /.*fly$/
 - Reading the query params in the routes
 - Reading the dynamic routes
+
+- Multiple route Handlers - play with the code
+- next()
+- next fucntion and errors along with the res.send()
+- app.use("/route", rh, [rh2, rh3], rh4, rh5)
