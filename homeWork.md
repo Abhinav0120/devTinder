@@ -32,3 +32,9 @@
 - Write a dummy auth middleware for all users, except /user/login
 - Error handling using app.use("/", (err, req, res, next)=>{}); (always keep it in the last of all routes)
 - Error handling using try and catch
+
+- Create a free cluster on MongoDB official website (MongoDB Atlas)
+- Install Mongoose library
+- Connect Your application to the Database "Connection-url"/devTinder
+- Call the connectDB function and connect to the Database before your server start listning to the requests
+- Create a userSchema & user Modal
