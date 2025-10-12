@@ -48,3 +48,9 @@
 - Doing User.findOne() with the duplicate emailId which document it returns.
 - Create API Get user by email.
 - Create API feed Get/feed All the users from the database.
+- Create Delete user API
+- Difference Between PATCH  and PUT
+- Create Update user API
+- Explore the mongoose Doc for model.
+- What are options in the findOneAndUpdate(), and explore more about it
+- API - Update the data using emailId
