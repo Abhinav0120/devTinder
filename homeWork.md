@@ -38,3 +38,6 @@
 - Connect Your application to the Database "Connection-url"/devTinder
 - Call the connectDB function and connect to the Database before your server start listning to the requests
 - Create a userSchema & user Modal
+- Create Post /signup API to add data to database
+- Push some documents using api calls from postman
+- Error handling using try catch
