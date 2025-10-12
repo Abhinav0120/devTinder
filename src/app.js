@@ -10,15 +10,11 @@ app.use(express.json());
 
 // Routes
 app.post('/signup', async (req, res) => {
+    // console.log('req', req.body);
   try {
     console.log('Signup route hit');
 
-    const user = new User({
-      firstName: "Abhinav",
-      lastName: "Ajagekar",
-      emailId: "test@gmail.com",
-      password: "testPassword",
-    });
+    const user = new User(req.body);
 
     await user.save();
     res.send('User added successfully');
