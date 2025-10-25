@@ -20,8 +20,8 @@ app.post('/signup', async (req, res) => {
     res.send('User added successfully');
   } catch (err) {
     console.error('Error in signup:', err);
-    res.status(500).send('Internal Server Error');
-  }
+    res.status(500).send(`Internal Server Error ${err}`);
+    }
 });
 
 // get user by email
@@ -89,11 +89,28 @@ app.delete('/user', async (req, res) =>{
 })
 
 // update user
-app.patch('/user', async (req, res) => {
-    const userId = req.body.userId;
+app.patch('/user/:userId', async (req, res) => {
+    const userId = req.params?.userId;
     const data = req.body;
+
+    // const ALLOWED_UPDATES = ['firstName', 'lastName', 'age', 'photoUrl', 'about', 'skills'];
+    // const requestedUpdates = Object.keys(data);
+    // const isValidOperation = requestedUpdates.every((update) => ALLOWED_UPDATES.includes(update));
+      
     try{
-        const user = await User.findByIdAndUpdate(userId, data, {returnDocument: 'before'});
+        const ALLOWED_UPDATES = ['firstName', 'lastName', 'age', 'photoUrl', 'about', 'skills'];
+        const isValidOperation = Object.keys(data).every((update) => ALLOWED_UPDATES.includes(update));
+
+        if(!isValidOperation){
+            throw new Error('Invalid updates!');
+        } 
+        if(data?.skills.length >10){
+            throw new Error('Skills cannot be more than 10');
+        }
+        const user = await User.findByIdAndUpdate(userId, data, {
+            returnDocument: 'before', 
+            runValidators: true
+        });
         console.log('user', user);
         if(!user){
             res.status(403).send('User not found!');
@@ -101,7 +118,7 @@ app.patch('/user', async (req, res) => {
             res.send('user updated successfully!');
         }
     } catch(error){
-        res.status(400).send('something went wrong!')
+        res.status(400).send('Update Failed: '+ error.message);
     }
 })
 

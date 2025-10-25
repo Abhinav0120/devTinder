@@ -54,3 +54,12 @@
 - Explore the mongoose Doc for model.
 - What are options in the findOneAndUpdate(), and explore more about it
 - API - Update the data using emailId
+
+- Explore Schema types options from the documentation
+- add required, uinique, lowercase, min, minLength, trim
+- Add default
+- Create a custom validator function for gender
+- Improve db schema put all the appropriate validator on in each fiels in schema
+- Add time stamp to the user Schema  
+- Add api level validation on patch request and Signup post api
+- DATA Sanitization - Add api validation fro each field
