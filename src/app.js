@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/database');
 const User = require('./models/user');
+const {validateSignUpData} = require('./utils/validation');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = 8080;
@@ -10,35 +12,52 @@ app.use(express.json());
 
 // Routes
 app.post('/signup', async (req, res) => {
-    // console.log('req', req.body);
-  try {
-    console.log('Signup route hit');
+    try {
+        // Validation of data
+        validateSignUpData(req);
+        // Encript the password
 
-    const user = new User(req.body);
+        const {firstName, lastName, emailId, password} = req.body;
 
-    await user.save();
-    res.send('User added successfully');
-  } catch (err) {
-    console.error('Error in signup:', err);
-    res.status(500).send(`Internal Server Error ${err}`);
+        // encryption
+        const passwordHash = await bcrypt.hash(password, 10)
+        console.log('passwordHash', passwordHash)
+
+        // Store the user in the DB
+
+        // console.log('req', req.body);
+        console.log('Signup route hit');
+
+        const user = new User({
+            firstName,
+            lastName,
+            emailId,
+            password: passwordHash
+        });
+
+        await user.save();
+        res.send('User added successfully');
+    } catch (err) {
+        console.error('ERROR : ', err);
+        res.status(500).send(`Internal Server Error ${err}`);
     }
 });
 
 // get user by email
-app.get("/user", async (req, res)=>{
-    const userEmail =  req.body.emailId;
+app.get("/user", async (req, res) => {
+    const userEmail = req.body.emailId;
     console.log('emailId', userEmail);
 
-    try{
-        const user = await User.findOne({emailId: userEmail});
+    try {
+        const user = await User.findOne({ emailId: userEmail });
         console.log('users', user);
-        if(!user){
+        if (!user) {
             res.status(404).send('user not found!');
-        }else {
+        } else {
             res.send(user);
         }
 
-    }catch(error){
+    } catch (error) {
         res.status(400).send('something went wrong!');
     }
 
@@ -61,28 +80,28 @@ app.get("/user", async (req, res)=>{
 
 //Create API feed Get/feed All the users from the database. 
 app.get("/feed", async (req, res) => {
-    try{
+    try {
         const users = await User.find({});
-        if(users.length === 0){
+        if (users.length === 0) {
             res.status(404).send('User not found!');
         }
         res.send(users);
-    } catch(error){
+    } catch (error) {
         res.status(400).send('something went wrong!');
     }
 })
 
 // delete user
-app.delete('/user', async (req, res) =>{
+app.delete('/user', async (req, res) => {
     const userId = req.body.userId;
-    try{
+    try {
         const user = await User.findByIdAndDelete(userId);
-        if(!user){
+        if (!user) {
             res.status(403).send('user not found!');
-        }else{
+        } else {
             res.send(`user ${user.firstName} ${user._id} delted successfully`);
         }
-    }catch(error){
+    } catch (error) {
         res.status(400).send('something went wrong!');
     }
 
@@ -96,40 +115,40 @@ app.patch('/user/:userId', async (req, res) => {
     // const ALLOWED_UPDATES = ['firstName', 'lastName', 'age', 'photoUrl', 'about', 'skills'];
     // const requestedUpdates = Object.keys(data);
     // const isValidOperation = requestedUpdates.every((update) => ALLOWED_UPDATES.includes(update));
-      
-    try{
+
+    try {
         const ALLOWED_UPDATES = ['firstName', 'lastName', 'age', 'photoUrl', 'about', 'skills'];
         const isValidOperation = Object.keys(data).every((update) => ALLOWED_UPDATES.includes(update));
 
-        if(!isValidOperation){
+        if (!isValidOperation) {
             throw new Error('Invalid updates!');
-        } 
-        if(data?.skills.length >10){
+        }
+        if (data?.skills.length > 10) {
             throw new Error('Skills cannot be more than 10');
         }
         const user = await User.findByIdAndUpdate(userId, data, {
-            returnDocument: 'before', 
+            returnDocument: 'before',
             runValidators: true
         });
         console.log('user', user);
-        if(!user){
+        if (!user) {
             res.status(403).send('User not found!');
-        }else {
+        } else {
             res.send('user updated successfully!');
         }
-    } catch(error){
-        res.status(400).send('Update Failed: '+ error.message);
+    } catch (error) {
+        res.status(400).send('Update Failed: ' + error.message);
     }
 })
 
 // Connect to DB and start server
 connectDB()
-  .then(() => {
-    console.log('Database connected successfully...');
-    app.listen(PORT, () => {
-      console.log(`✅ Server is successfully listening on port ${PORT}`);
+    .then(() => {
+        console.log('Database connected successfully...');
+        app.listen(PORT, () => {
+            console.log(`✅ Server is successfully listening on port ${PORT}`);
+        });
+    })
+    .catch((err) => {
+        console.log('❌ Database cannot be created:', err);
     });
-  })
-  .catch((err) => {
-    console.log('❌ Database cannot be created:', err);
-  });
