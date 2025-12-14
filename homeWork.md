@@ -84,3 +84,5 @@
 - Set the expiry fo JWT token and cookies to 7 days
 - Create userScheam methods to getJwt()
 - Create userScheam methods to comparepassword(passwordInputByUser)
+
+- Explore tinder
