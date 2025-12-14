@@ -86,3 +86,7 @@
 - Create userScheam methods to comparepassword(passwordInputByUser)
 
 - Explore tinder
+- Create POST /logout api
+- Create PATCH /profile/edit
+- Create PATCH /profile/password API => forgot password
+- Make yoo validate all data in every POST, PATCH API'S 
