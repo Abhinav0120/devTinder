@@ -90,3 +90,15 @@
 - Create PATCH /profile/edit
 - Create PATCH /profile/password API => forgot password
 - Make yoo validate all data in every POST, PATCH API'S 
+
+- Create a Connection Request Schema
+- Send Connectin Request
+- Proper validation of data
+- Think about all corner cases
+- $or and $and query in mongoose
+- schema.pre("save") function
+- Read more about indexes in mongoDB
+- Why do we need index in DB?
+- What is the advantages and disadvantage of creating index?
+- Read this artical about compound indexes https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
+- ALWAYS THINK ABOUT CORNER CASES
