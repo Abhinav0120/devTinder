@@ -12,8 +12,7 @@
 
 ## connectionRequestRouter
 - POST /request/send/:status/:userID
-- POST /request/review/accepted/:requestID
-- POST /request/review/rejected/:requestId
+- POST /request/review/:status/:requestID
 
 ## useRouter
 - GET /user/connections
