@@ -14,11 +14,13 @@ app.use(cookieParser());
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile')
 const requestRouter = require('./routes/request')
+const userRouter = require('./routes/user');
 
 // Use Routes
 app.use('/', authRouter);
 app.use('/', profileRouter);
 app.use('/', requestRouter);
+app.use('/', userRouter)
 
 // Error handling middleware for JSON parsing errors and other errors
 app.use((err, req, res, next) => {

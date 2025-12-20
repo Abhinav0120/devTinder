@@ -104,3 +104,7 @@
 - ALWAYS THINK ABOUT CORNER CASES
 
 - Write code with proper validations for POST /request/review/:status/:requestID"
+- Thought process - POST vs GET 
+- Read about ref and populate https://mongoosejs.com/docs/populate.html
+- Create Get /user/request/recieved with all the checks
+- Create Get /user/connections 
